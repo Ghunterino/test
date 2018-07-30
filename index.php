@@ -16,22 +16,22 @@ for ($i=0; $i < 100000; $i++) {
   $dom->loadFromUrl('https://www.service-public.fr/particuliers/vosdroits/F'.$i);
 
   try{
-    $question = $dom->find('#headerPage')->find("h1")->innerHtml;
+    $question = $dom->find('#headerPage')->find("h1")->text;
     $checkIntro = sizeof($dom->find('#intro'));
     $checkContentFiche = sizeof($dom->find('.content-fiche'));
     if($checkIntro > 0){
-      $response = $dom->find('#intro')->find('p')->innerHtml;
+      $response = $dom->find('#intro')->find('p')->text;
     }
     elseif($checkContentFiche > 0){
       if(sizeof($dom->find('.content-fiche')->find('p')) > 0){
-        $response = $dom->find('.content-fiche')->find('p')->innerHtml;
+        $response = $dom->find('.content-fiche')->find('p')->text;
       }
     }
     else{
       echo "Weird !";
     }
     fputcsv($fp, [
-      $question, $response
+      str_replace('&#39;', "'", $question), str_replace('&#39;', "'", $response)
     ]);
 
   }
