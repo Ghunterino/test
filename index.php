@@ -32,7 +32,7 @@ for ($i=0; $i < 100000; $i++) {
     }
     fputcsv($fp, [
       str_replace('&#39;', "'", $question), str_replace('&#39;', "'", $response)
-    ]);
+    ],',', chr(0));
 
   }
   catch(Exception $e){
